@@ -22,6 +22,7 @@ $(document).ready(() => {
       sdpURL: "",
       applicationName: "",
       streamName: "",
+      applicationToken: "test5",
       audioBitrate: "64",
       audioCodec: "opus",
       videoBitrate: "3500",
@@ -98,6 +99,11 @@ $(document).ready(() => {
     {
       throw "Missing stream name."
     }
+    else if (state.settings.applicationToken === "")
+    {
+      throw "Missing application Token";
+    }
+
     return true;
   }
 

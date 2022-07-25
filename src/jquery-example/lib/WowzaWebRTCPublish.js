@@ -36,7 +36,7 @@ let state = {
     videoCodec: "42e01f",
     audioCodec: "opus"
   },
-  userData: { param1: "value1" }, // ?
+  userData: { token: "" }, // ?
   audioEnabled: true,
   videoEnabled: true,
   useSoundMeter: false,

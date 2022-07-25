@@ -18,7 +18,7 @@ class WowzaWebRTCPlay
         streamName: "",
         sessionId: "[empty]"
       },
-      userData: { param1: "value1" } // ?
+      userData: { token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjMzMzY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.BU16cIIRL61Pi75ZLgkmjpme-HrOR3doW6zVl7QyyDs" } // ?
     }
 
     this.wowzaPeerConnectionPlay = undefined;
