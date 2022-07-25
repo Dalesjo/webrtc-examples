@@ -36,7 +36,7 @@ let state = {
     videoCodec: "42e01f",
     audioCodec: "opus"
   },
-  userData: { token: "" }, // ?
+  userData: { applicationToken: "" }, // ?
   audioEnabled: true,
   videoEnabled: true,
   useSoundMeter: false,
@@ -126,8 +126,12 @@ const set = async (props) =>
 
   newState['mediaInfo'] = newMediaInfo;
 
-  if (props.userData != null)
-    newState['userData'] = {...props.userData};
+  if (props.applicationToken != null)
+  {
+    newState['userData'] = {
+      "applicationToken": props.applicationToken
+    };
+  }
 
   if (props.constraints != null)
     newState['constraints'] = props.constraints;
@@ -311,7 +315,7 @@ const getDevices = () =>
     console.log('WowzaWebRTCPublish.getDevices');
     navigator.mediaDevices.enumerateDevices().then((devices) =>
     {
-      // console.log(JSON.stringify(devices));
+      console.log('WowzaWebRTCPublish.getDevices',devices);
       let constraints = {...getState().constraints};
       let cameras = [];
       let microphones = [];

@@ -18,7 +18,7 @@ class WowzaWebRTCPlay
         streamName: "",
         sessionId: "[empty]"
       },
-      userData: { token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjMzMzY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.BU16cIIRL61Pi75ZLgkmjpme-HrOR3doW6zVl7QyyDs" } // ?
+      userData: { applicationToken: "" } // ?
     }
 
     this.wowzaPeerConnectionPlay = undefined;
@@ -90,9 +90,13 @@ class WowzaWebRTCPlay
 
       newState['streamInfo'] = newStreamInfo;
 
-      if (props.userData != null)
-        newState['userData'] = {...props.userData};
-
+      if (props.applicationToken != null)
+      {
+        newState['userData'] = {
+          "applicationToken": props.applicationToken
+        };
+      }
+      
       _this.setState(newState)
       .then((s) => {
         resolve(s);
