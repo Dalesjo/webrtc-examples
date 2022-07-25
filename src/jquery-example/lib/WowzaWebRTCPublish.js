@@ -259,7 +259,6 @@ const getUserMedia = (mediaKind) =>
       {
         if (mediaKind !== 'video' && window.AudioContext && currentState.useSoundMeter)
         {
-
           let audioContext = new AudioContext();
           let soundMeter = new SoundMeter(audioContext);
           soundMeter.connectToSource(stream, function(e) {

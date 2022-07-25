@@ -23,7 +23,6 @@ const canScreenShare = () => {
 }
 
 const init = (cameras,mics,camCallback,micCallback) => {
-
   if (canScreenShare())
   {
     cameras.push({deviceId:'screen_screen',kind:'videoinput',label:'Screen Share'});
@@ -49,15 +48,19 @@ const init = (cameras,mics,camCallback,micCallback) => {
 
   // console.log(selectedCam);
 
-  $("#camera-list-select").append(deviceListSelectHTML(cameras,"Camera"));
+  $("#camera-list-select").append(deviceListSelectHTML(cameras,"Camera",camCallback));
   $("#camera-list-select").change(() => {
     let camera = $("#camera-list-select option:selected").attr("id").split("_")[1];
+    console.log("Selected Camera",camera);
+    localStorage.setItem("Camera", camera);
     camCallback(camera);
   });
 
-  $("#mic-list-select").append(deviceListSelectHTML(mics,"Microphone"));
+  $("#mic-list-select").append(deviceListSelectHTML(mics,"Microphone",micCallback));
   $("#mic-list-select").change(() => {
     let mic = $("#mic-list-select option:selected").attr("id").split("_")[1];
+    console.log("Selected Microphone",mic);
+    localStorage.setItem("Microphone", mic);
     micCallback(mic);
   });
 
@@ -79,22 +82,48 @@ const init = (cameras,mics,camCallback,micCallback) => {
 
 const deviceListDesktopHTML = (devices,label) => {
   let deviceList = ""
-  for(var i = 0; i < devices.length; i++){
+  let lastDevice = localStorage.getItem(label);
+  console.log(`deviceListDesktopHTML:lastDevice:${label}`, lastDevice);
+  for (var i = 0; i < devices.length; i++){
     let deviceId = `${label}_${devices[i].deviceId}`;
-    if(i==0) {setSelectedDevice(deviceId,label);};
+    if (lastDevice == devices[i].deviceId) 
+    {
+      setSelectedDevice(deviceId, label);
+      console.log("deviceListDesktopHTML:selecteDevice",deviceId);
+    };
     let deviceLabel = devices[i].label || `${label}_${i}`;
     deviceList = deviceList + `<p id="${deviceId}" class="device-list-item">${deviceLabel}</p>`
   }
   return deviceList;
 }
 
-const deviceListSelectHTML = (devices,label) => {
+const deviceListSelectHTML = (devices,label,callback) => {
   let deviceList = []
-  for(var i = 0; i < devices.length; i++){
+  let lastDevice = localStorage.getItem(label);
+  for (var i = 0; i < devices.length; i++){
+    console.log(`deviceListSelectHTML:Device:${label}`, devices[i].deviceId);
     let deviceId = `${label}Mobile_${devices[i].deviceId}`;
-    if(i==0) { selectedMobileCam = deviceId;};
+    if (lastDevice == devices[i].deviceId) 
+    { 
+      selectedMobileCam = deviceId; 
+      console.log("deviceListSelectHTML:selecteDevice",deviceId);
+    }
     let deviceLabel = devices[i].label || `${label}_${i}`;
     let element = $('<option>').attr("id", deviceId).attr("value", deviceId).text(deviceLabel);
+
+    if (lastDevice == devices[i].deviceId) 
+    { 
+      setSelectedDevice(deviceId, label);
+      element.attr("selected","selected");
+
+      let timeout = label == "Microphone" ? 0 : 2000;
+      let id = devices[i].deviceId;
+      window.setTimeout( () => {
+        console.log("setTimeout",label,timeout);
+        callback(id);
+      },timeout);
+    }
+
     deviceList.push(element);
   }
   return deviceList;
