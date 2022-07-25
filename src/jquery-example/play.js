@@ -11,7 +11,7 @@ let state = {
     playSdpURL: "",
     playApplicationName: "",
     playStreamName: "",
-    applicationToken: ""
+    playApplicationToken: ""
   }
 };
 let statePrefix = 'play';
