@@ -8,5 +8,4 @@
 USERNAME="root"
 SERVER=ns2.fnf.nu
 
-scp -r src/jquery-example/* ${USERNAME}@${SERVER}:/host/ssd/com.dalesjo/www/examples/vgregion/broadcast
-
+scp -r src/jquery-example/* ${USERNAME}@${SERVER}:/host/ssd/com.dalesjo/www/examples/webrtc/
